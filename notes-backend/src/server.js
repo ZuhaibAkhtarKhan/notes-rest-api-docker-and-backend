@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const { noteRouter } = require('./routes');
 
 const app = express();
+app.use(bodyParser.json());
 
-app.get('/api/notes', (req, res) => res.json({message: 'Hello from notes.'}));
+app.use('/api/notes', noteRouter);
 
 mongoose.connect(process.env.DB_URL).then(()=> {
     console.log('Connected to MongoDB! Starting server.');
